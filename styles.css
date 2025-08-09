@@ -274,3 +274,74 @@ background: linear-gradient(
   rgba(50, 50, 50, 0.5)
 );
 }
+
+/* Ajustes para móviles */
+@media (max-width: 768px) {
+  .glitch {
+    font-size: 3rem; /* Reducir título */
+  }
+
+  .cards {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .card {
+    width: 120px;
+    height: 120px;
+  }
+
+  .card i {
+    font-size: 1.5rem;
+  }
+
+  /* Ajustar animaciones de subida para distancias menores */
+  @keyframes subir {
+    from { opacity: 0; top: 0px; }
+    to   { opacity: 1; top: -50px; }
+  }
+  @keyframes subire {
+    from { opacity: 0; top: 0px; }
+    to   { opacity: 1; top: -40px; }
+  }
+  @keyframes bajar {
+    from { opacity: 0; top: 60%; }
+    to   { opacity: 1; top: 90%; }
+  }
+  @keyframes subir2 {
+    from { opacity: 0; top: 0px; }
+    to   { opacity: 1; top: -40px; }
+  }
+
+  /* Reducir delay para que sea más ágil en móvil */
+  a.card:hover p,
+  #inicio:hover .cards p.siguenos1,
+  .siguenos2:hover p,
+  .siguenos2bajar:hover p {
+    animation-delay: 0s, 0.3s;
+  }
+}
+
+@media (max-width: 480px) {
+  .glitch {
+    font-size: 2rem;
+  }
+
+  .card {
+    width: 100px;
+    height: 100px;
+  }
+
+  .cards {
+    gap: 1rem;
+  }
+
+  .card i {
+    font-size: 1.2rem;
+  }
+
+  p, span {
+    font-size: 0.8rem;
+  }
+}
