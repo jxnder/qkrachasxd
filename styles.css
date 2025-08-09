@@ -1,23 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap');
 
-:root{
-  --bg-color: transparent;
+/* -------------------------
+   VARIABLES Y RESET BÁSICO
+   ------------------------- */
+:root {
+  --bg-color: transparent; /* usa un color si quieres que p/span tengan fondo */
 }
 
-/* Reset / base */
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
   overflow: hidden;
 }
+
 p, span {
   font-family: 'Gloria Hallelujah', cursive;
   background-color: var(--bg-color);
   color: white;
 }
 
-/* INICIO / fondo */
+/* -------------------------
+   INICIO / FONDO / RUIDO
+   ------------------------- */
 #inicio {
   height: 100vh;
   display: flex;
@@ -26,7 +31,9 @@ p, span {
   align-items: center;
   gap: 2rem;
   position: relative;
+  overflow: visible;
 }
+
 #inicio::before {
   content: "";
   position: absolute;
@@ -35,11 +42,12 @@ p, span {
   background: linear-gradient(rgba(255,0,166,0.5), rgba(0,0,0,0.5)), url("img/qks2.jpg") no-repeat center center/cover;
   filter: grayscale(100%);
   transition: filter 0.8s ease; /* transición suave */
-  z-index: -1;
+  z-index: -2;
 }
 #inicio:hover::before {
   filter: grayscale(0%);
 }
+
 /* Ruido visual */
 #inicio::after {
   content: "";
@@ -49,33 +57,38 @@ p, span {
   background: url('img/grunge1.png') repeat;
   opacity:0.1;
   pointer-events:none;
+  z-index: -1;
 }
 
-/* TITULO GLITCH */
+/* -------------------------
+   TITULO GLITCH
+   ------------------------- */
 .glitch {
   font-family: 'Rubik Glitch', cursive;
   font-size: 5rem;
   background: linear-gradient(135deg, #ff0080, #ff8acb);
   -webkit-background-clip: text;
+  background-clip: text;
   color: transparent;
   position: relative;
   animation: glitchAnim 1.5s infinite;
   text-align: center;
+  z-index: 2;
 }
+
 .glitch::before,
 .glitch::after {
   content: attr(data-text);
   position: absolute;
   left: 0;
+  top: 0;
+  width: 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
 }
-.glitch::before {
-  animation: glitchBefore 1.5s infinite;
-  color: #ff00ff;
-}
-.glitch::after {
-  animation: glitchAfter 1.5s infinite;
-  color: #00ffff;
-}
+.glitch::before { animation: glitchBefore 1.5s infinite; color: #ff00ff; }
+.glitch::after  { animation: glitchAfter  1.5s infinite; color: #00ffff; }
+
 @keyframes glitchAnim { 
   0%,100%{transform:translate(0);} 
   20%{transform:translate(-2px,2px);} 
@@ -94,18 +107,21 @@ p, span {
   40%{clip-path:inset(0 0 80% 0);transform:translate(-2px,2px);} 
 }
 
-/* CARDS y textos asociados */
+/* -------------------------
+   CARDS Y TEXTOS ASOCIADOS
+   ------------------------- */
 .cards {
   display: flex;
   gap: 1rem;
   z-index: 2;
   position: relative;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
-.cards a {
-  z-index: 1;
-}
+.cards a { z-index: 1; text-decoration: none; }
 
-/* textos posicionados (siguenos1, sigunenos2, etc) */
+/* textos posicionados (siguenos1, siguenos2, siguenos2bajar...) */
 #inicio .cards p.siguenos1,
 .siguenos2 p,
 .siguenos2bajar p {
@@ -115,9 +131,10 @@ p, span {
   transform: translate(-50%, -50%);
   opacity: 0;
   pointer-events: none;
+  z-index: 3;
 }
 
-/* Hover con dos animaciones: aparición + parpadeo */
+/* Hover con dos animaciones: aparición + parpadeo (tal como tenías) */
 #inicio:hover .cards p.siguenos1 {
   animation: subir 1s ease forwards, 
              parpadeo 1s step-start infinite;
@@ -135,7 +152,17 @@ p, span {
   animation-delay: 0s, 0.5s;
 }
 
-/* ANIMACIONES (DESKTOP / LANDSCAPE) - movimiento vertical usando translateY */
+/* Aparición/parpadeo en cards individuales */
+a.card:hover p {
+  animation: subir2 1s ease forwards, 
+             parpadeo2 1.2s step-start infinite;
+  animation-delay: 0s, 1s; /* Parpadeo empieza después de subir */
+}
+
+/* -------------------------
+   KEYFRAMES (DESKTOP / LANDSCAPE)
+   - usamos transform: translate(...) para mayor estabilidad
+   ------------------------- */
 @keyframes subir {
   from { opacity: 0; transform: translate(-50%, -50%); }
   to   { opacity: 1; transform: translate(-50%, calc(-50% - 70px)); } /* sube 70px */
@@ -148,8 +175,13 @@ p, span {
   from { opacity: 0; transform: translate(-50%, -50%); }
   to   { opacity: 1; transform: translate(-50%, calc(-50% + 120px)); } /* baja ~120px */
 }
+/* Para cards */
+@keyframes subir2 {
+  from { opacity: 0; transform: translate(-50%, -50%); }
+  to   { opacity: 1; transform: translate(-50%, calc(-50% - 50px)); } /* sube 50px */
+}
 
-/* Parpadeo rápido 3 veces */
+/* Parpadeos */
 @keyframes parpadeo {
   0%, 15% { opacity: 1; }
   20%, 25% { opacity: 0; }
@@ -159,30 +191,6 @@ p, span {
   80%, 85% { opacity: 0; }
   90%, 100% { opacity: 1; }
 }
-
-/* Contenedores auxiliares */
-.siguenos2, .siguenos2bajar {
-  position: relative;
-  text-align: center;
-}
-.siguenos2 p, .siguenos2bajar p {
-  width: 100%;
-  opacity: 0;
-}
-
-/* Hover en cada card (texto superior) */
-a.card:hover p {
-  animation: subir2 1s ease forwards, 
-             parpadeo2 1.2s step-start infinite;
-  animation-delay: 0s, 1s;
-}
-
-/* Aparición y subida para cards (desktop) */
-@keyframes subir2 {
-  from { opacity: 0; transform: translate(-50%, -50%); }
-  to   { opacity: 1; transform: translate(-50%, calc(-50% - 50px)); } /* sube 50px */
-}
-/* Parpadeo para cards */
 @keyframes parpadeo2 {
   0%, 15% { opacity: 1; }
   20%, 25% { opacity: 0; }
@@ -193,12 +201,15 @@ a.card:hover p {
   90%, 100% { opacity: 1; }
 }
 
-/* CARD visuals */
+/* -------------------------
+   ESTILOS VISUALES DE LAS CARDS
+   ------------------------- */
 .card i {
   font-size: 2rem;
   margin-bottom: 0.3rem;
   z-index: 2;
 }
+
 .card {
   width: 150px;
   height: 150px;
@@ -209,16 +220,13 @@ a.card:hover p {
   align-items: center;
   color: white;
   font-weight: bold;
-  text-decoration: none;
   position: relative;
   transition: transform 0.3s ease, filter 0.3s ease;
   filter: grayscale(100%);
   flex-direction: column;
 }
-.card span {
-  position: relative;
-  z-index: 2;
-}
+.card span { position: relative; z-index: 2; }
+
 .card::before {
   content: '';
   position: absolute;
@@ -229,11 +237,13 @@ a.card:hover p {
   z-index: 1;
   transition: transform 0.3s ease, filter 0.3s ease;
 }
+
+/* Tus fondos fijos (mantenidos tal cual) */
 .card.instagram::before { background-image: url('img/qks1.jpg'); }
 .card.tiktok::before    { background-image: url('img/qks4.jpg'); }
 .card.youtube::before   { background-image: url('img/qks6.jpg'); }
 
-/* Hover con degradado rosa-celeste */
+/* Hover */
 .card:hover {
   transform: scale(1.05) skewX(2deg);
   filter: grayscale(0%);
@@ -248,6 +258,8 @@ a.card:hover p {
   inset: 0;
   z-index: 1;
 }
+
+/* Gradientes hover por red social (mantuvimos los que pediste) */
 .card.instagram:hover::after {
   background: linear-gradient(
     45deg,
@@ -275,31 +287,17 @@ a.card:hover p {
   );
 }
 
-/* ------------------
-   BREAKPOINTS / MOBILE
-   ------------------ */
+/* -------------------------
+   BREAKPOINTS / ADAPTACIONES
+   ------------------------- */
 
-/* Portrait phones/tablets: animaciones horizontales */
+/* Portrait phones/tablets: animaciones laterales (izquierda/derecha) */
 @media (max-width: 768px) and (orientation: portrait) {
 
-  .glitch {
-    font-size: 3rem; /* Reducir título */
-  }
-
-  .cards {
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-  }
-
-  .card {
-    width: 120px;
-    height: 120px;
-  }
-
-  .card i {
-    font-size: 1.5rem;
-  }
+  .glitch { font-size: 3rem; }
+  .cards { flex-direction: column; align-items: center; gap: 1.5rem; }
+  .card { width: 120px; height: 120px; }
+  .card i { font-size: 1.5rem; }
 
   /* Reducir delay para que sea más ágil en móvil */
   a.card:hover p,
@@ -309,14 +307,15 @@ a.card:hover p {
     animation-delay: 0s, 0.3s;
   }
 
-  /* REDEFINICIÓN de las mismas keyframes pero moviendo en X (izquierda/derecha) */
+  /* Redefinimos las keyframes para que se muevan horizontalmente
+     (usamos transform translate(...) para mantenerse consistentes) */
   @keyframes subir {
     from { opacity: 0; transform: translate(-50%, -50%); }
     to   { opacity: 1; transform: translate(calc(-50% - 70px), -50%); } /* va hacia la izquierda */
   }
   @keyframes subire {
     from { opacity: 0; transform: translate(-50%, -50%); }
-    to   { opacity: 1; transform: translate(calc(-50% - 50px), -50%); }
+    to   { opacity: 1; transform: translate(calc(-50% - 50px), -50%); } /* izquierda (menor) */
   }
   @keyframes bajar {
     from { opacity: 0; transform: translate(-50%, -50%); }
@@ -328,7 +327,7 @@ a.card:hover p {
   }
 }
 
-/* Otros ajustes móviles (pequeños) */
+/* Small portrait phones */
 @media (max-width: 480px) and (orientation: portrait) {
   .glitch { font-size: 2rem; }
   .card { width: 100px; height: 100px; }
@@ -338,10 +337,43 @@ a.card:hover p {
 }
 
 /* Landscape small screens: mantener estructura desktop pero compacta */
-@media (max-height: 480px) and (orientation: landscape) {
-  .glitch { font-size: 2.5rem; }
+@media (max-width: 1024px) and (orientation: landscape), (max-height: 480px) and (orientation: landscape) {
+  .glitch { font-size: 3.5rem; }
   .cards { flex-direction: row; justify-content: center; gap: 1.2rem; }
-  .card { width: 110px; height: 110px; }
-  .card i { font-size: 1.4rem; }
-  p, span { font-size: 0.85rem; }
+  .card { width: 130px; height: 130px; }
+  .card i { font-size: 1.6rem; }
+  p, span { font-size: 0.9rem; }
+
+  /* Restaurar animaciones verticales en landscape */
+  a.card:hover p,
+  #inicio:hover .cards p.siguenos1,
+  .siguenos2:hover p,
+  .siguenos2bajar:hover p {
+    animation: subir 1s ease forwards, parpadeo 1s step-start infinite;
+    animation-delay: 0s, 0.5s;
+  }
+
+  @keyframes subir {
+    from { opacity: 0; transform: translate(-50%, -50%); }
+    to   { opacity: 1; transform: translate(-50%, calc(-50% - 70px)); }
+  }
+  @keyframes subire {
+    from { opacity: 0; transform: translate(-50%, -50%); }
+    to   { opacity: 1; transform: translate(-50%, calc(-50% - 50px)); }
+  }
+  @keyframes bajar {
+    from { opacity: 0; transform: translate(-50%, -50%); }
+    to   { opacity: 1; transform: translate(-50%, calc(-50% + 120px)); }
+  }
+  @keyframes subir2 {
+    from { opacity: 0; transform: translate(-50%, -50%); }
+    to   { opacity: 1; transform: translate(-50%, calc(-50% - 50px)); }
+  }
+}
+
+/* Extra-small fallback */
+@media (max-width: 360px) {
+  .glitch { font-size: 1.8rem; }
+  .card { width: 90px; height: 90px; }
+  .card i { font-size: 1rem; }
 }
