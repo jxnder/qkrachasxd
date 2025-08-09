@@ -1,0 +1,276 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap');
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+p,span {
+  font-family: 'Gloria Hallelujah', cursive;
+  background-color: var(--bg-color);
+  color: white;
+}
+
+#inicio {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  position: relative;
+}
+#inicio::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(rgba(255,0,166,0.5), rgba(0,0,0,0.5)), url("img/qks2.jpg") no-repeat center center/cover;
+  filter: grayscale(100%);
+  transition: filter 0.8s ease; /* transición suave */
+  z-index: -1;
+}
+#inicio:hover::before {
+  filter: grayscale(0%);
+}
+/* Ruido visual */
+#inicio::after {
+  content: "";
+  position: absolute;
+  top:0; left:0;
+  width:100%; height:100%;
+  background: url('img/grunge1.png') repeat;
+  opacity:0.1;
+  pointer-events:none;
+}
+
+.glitch {
+  font-family: 'Rubik Glitch', cursive;
+  font-size: 5rem;
+  background: linear-gradient(135deg, #ff0080, #ff8acb);
+  -webkit-background-clip: text;
+  color: transparent;
+  position: relative;
+  animation: glitchAnim 1.5s infinite;
+  text-align: center;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+}
+
+.glitch::before {
+  animation: glitchBefore 1.5s infinite;
+  color: #ff00ff;
+}
+
+.glitch::after {
+  animation: glitchAfter 1.5s infinite;
+  color: #00ffff;
+}
+
+@keyframes glitchAnim { 
+  0%,100%{transform:translate(0);} 
+  20%{transform:translate(-2px,2px);} 
+  40%{transform:translate(-2px,-2px);} 
+  60%{transform:translate(2px,2px);} 
+  80%{transform:translate(2px,-2px);} 
+}
+@keyframes glitchBefore { 
+  0%,100%{clip-path:inset(0);transform:translate(0);} 
+  20%{clip-path:inset(0 0 80% 0);transform:translate(-2px,-2px);} 
+  40%{clip-path:inset(80% 0 0 0);transform:translate(2px,2px);} 
+}
+@keyframes glitchAfter { 
+  0%,100%{clip-path:inset(0);transform:translate(0);} 
+  20%{clip-path:inset(80% 0 0 0);transform:translate(2px,-2px);} 
+  40%{clip-path:inset(0 0 80% 0);transform:translate(-2px,2px);} 
+}
+
+/* Cards */
+.cards {
+  display: flex;
+  gap: 1rem;
+  z-index: 2;
+  position: relative;
+}
+.cards a{
+        z-index: 1;
+
+}
+#inicio .cards p.siguenos1,.siguenos2 p,.siguenos2bajar p {
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    pointer-events: none;
+}
+/* Hover con dos animaciones: aparición + parpadeo */
+#inicio:hover .cards p.siguenos1{
+    animation: subir 1s ease forwards, 
+               parpadeo 1s step-start infinite;
+    animation-delay: 0s, 0.5s; /* Parpadeo empieza después de subir */
+}
+.siguenos2:hover p,.siguenos2bajar:hover p {
+    animation: subire 1s ease forwards, 
+               parpadeo 1s step-start infinite;
+    animation-delay: 0s, 0.5s; /* Parpadeo empieza después de subir */
+}
+.siguenos2bajar:hover p {
+    animation: bajar 1s ease forwards, 
+               parpadeo 1s step-start infinite;
+    animation-delay: 0s, 0.5s; /* Parpadeo empieza después de subir */
+}
+/* Aparición y subida */
+@keyframes subir {
+    from { opacity: 0; top: 0px; }
+    to   { opacity: 1; top: -70px; }
+}
+@keyframes subire {
+    from { opacity: 0; top: 0px; }
+    to   { opacity: 1; top: -50px; }
+}
+@keyframes bajar {
+    from { opacity: 0; top: 70%; }
+    to   { opacity: 1; top: 100%; }
+}
+/* Parpadeo rápido 3 veces */
+@keyframes parpadeo {
+    0%, 15% { opacity: 1; }
+    20%, 25% { opacity: 0; }
+    30%, 45% { opacity: 1; }
+    50%, 55% { opacity: 0; }
+    60%, 75% { opacity: 1; }
+    80%, 85% { opacity: 0; }
+    90%, 100% { opacity: 1; }
+}
+
+.siguenos2,.siguenos2bajar{
+    position: relative;
+    text-align: center;
+}
+.siguenos2 p,.siguenos2bajar p{
+    width: 100%;
+    opacity: 0;
+}
+/* Hover con dos animaciones: aparición + parpadeo */
+a.card:hover p {
+    animation: subir2 1s ease forwards, 
+               parpadeo2 1.2s step-start infinite;
+    animation-delay: 0s, 1s; /* Parpadeo empieza después de subir */
+}
+/* Aparición y subida */
+@keyframes subir2 {
+    from { opacity: 0; top: 0px; }
+    to   { opacity: 1; top: -50px; }
+}
+/* Parpadeo rápido 3 veces */
+@keyframes parpadeo2 {
+    0%, 15% { opacity: 1; }
+    20%, 25% { opacity: 0; }
+    30%, 45% { opacity: 1; }
+    50%, 55% { opacity: 0; }
+    60%, 75% { opacity: 1; }
+    80%, 85% { opacity: 0; }
+    90%, 100% { opacity: 1; }
+}
+
+.card i {
+  font-size: 2rem;
+  margin-bottom: 0.3rem;
+  z-index: 2;
+}
+
+.card {
+  width: 150px;
+  height: 150px;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  position: relative;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  filter: grayscale(100%);
+  flex-direction: column;
+}
+
+.card span {
+  position: relative;
+  z-index: 2;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.6);
+  z-index: 1;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.card.instagram::before {
+  background-image: url('img/qks1.jpg');
+}
+
+.card.tiktok::before {
+  background-image: url('img/qks4.jpg');
+}
+
+.card.youtube::before {
+  background-image: url('img/qks6.jpg');
+}
+
+/* Hover con degradado rosa-celeste */
+.card:hover {
+  transform: scale(1.05) skewX(2deg);
+      filter: grayscale(0%);
+
+}
+
+.card:hover::before {
+  filter: brightness(1);
+  transform: scale(1.1);
+}
+
+.card:hover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.card.instagram:hover::after {
+  background: linear-gradient(
+  45deg,
+  rgba(254, 218, 117, 0.5),
+  rgba(250, 126, 30, 0.5),
+  rgba(214, 41, 118, 0.5),
+  rgba(150, 47, 191, 0.5),
+  rgba(79, 91, 213, 0.5)
+);
+}
+.card.tiktok:hover::after {
+background: linear-gradient(
+  45deg,
+  rgba(0, 242, 234, 0.5),
+  rgba(255, 0, 80, 0.5),
+  rgba(0, 0, 0, 0.5)
+);}
+.card.youtube:hover::after {
+background: linear-gradient(
+  45deg,
+  rgba(255, 0, 0, 0.5),
+  rgba(200, 0, 0, 0.5),
+  rgba(50, 50, 50, 0.5)
+);
+}
