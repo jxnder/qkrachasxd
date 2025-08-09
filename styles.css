@@ -1,17 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap');
 
+:root{
+  --bg-color: transparent;
+}
+
+/* Reset / base */
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
   overflow: hidden;
 }
-p,span {
+p, span {
   font-family: 'Gloria Hallelujah', cursive;
   background-color: var(--bg-color);
   color: white;
 }
 
+/* INICIO / fondo */
 #inicio {
   height: 100vh;
   display: flex;
@@ -45,6 +51,7 @@ p,span {
   pointer-events:none;
 }
 
+/* TITULO GLITCH */
 .glitch {
   font-family: 'Rubik Glitch', cursive;
   font-size: 5rem;
@@ -55,24 +62,20 @@ p,span {
   animation: glitchAnim 1.5s infinite;
   text-align: center;
 }
-
 .glitch::before,
 .glitch::after {
   content: attr(data-text);
   position: absolute;
   left: 0;
 }
-
 .glitch::before {
   animation: glitchBefore 1.5s infinite;
   color: #ff00ff;
 }
-
 .glitch::after {
   animation: glitchAfter 1.5s infinite;
   color: #00ffff;
 }
-
 @keyframes glitchAnim { 
   0%,100%{transform:translate(0);} 
   20%{transform:translate(-2px,2px);} 
@@ -91,101 +94,111 @@ p,span {
   40%{clip-path:inset(0 0 80% 0);transform:translate(-2px,2px);} 
 }
 
-/* Cards */
+/* CARDS y textos asociados */
 .cards {
   display: flex;
   gap: 1rem;
   z-index: 2;
   position: relative;
 }
-.cards a{
-        z-index: 1;
+.cards a {
+  z-index: 1;
+}
 
+/* textos posicionados (siguenos1, sigunenos2, etc) */
+#inicio .cards p.siguenos1,
+.siguenos2 p,
+.siguenos2bajar p {
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  pointer-events: none;
 }
-#inicio .cards p.siguenos1,.siguenos2 p,.siguenos2bajar p {
-    position: absolute;
-    top: 0px;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    pointer-events: none;
-}
+
 /* Hover con dos animaciones: aparición + parpadeo */
-#inicio:hover .cards p.siguenos1{
-    animation: subir 1s ease forwards, 
-               parpadeo 1s step-start infinite;
-    animation-delay: 0s, 0.5s; /* Parpadeo empieza después de subir */
+#inicio:hover .cards p.siguenos1 {
+  animation: subir 1s ease forwards, 
+             parpadeo 1s step-start infinite;
+  animation-delay: 0s, 0.5s; /* Parpadeo empieza después de subir */
 }
-.siguenos2:hover p,.siguenos2bajar:hover p {
-    animation: subire 1s ease forwards, 
-               parpadeo 1s step-start infinite;
-    animation-delay: 0s, 0.5s; /* Parpadeo empieza después de subir */
+.siguenos2:hover p,
+.siguenos2bajar:hover p {
+  animation: subire 1s ease forwards, 
+             parpadeo 1s step-start infinite;
+  animation-delay: 0s, 0.5s;
 }
 .siguenos2bajar:hover p {
-    animation: bajar 1s ease forwards, 
-               parpadeo 1s step-start infinite;
-    animation-delay: 0s, 0.5s; /* Parpadeo empieza después de subir */
+  animation: bajar 1s ease forwards, 
+             parpadeo 1s step-start infinite;
+  animation-delay: 0s, 0.5s;
 }
-/* Aparición y subida */
+
+/* ANIMACIONES (DESKTOP / LANDSCAPE) - movimiento vertical usando translateY */
 @keyframes subir {
-    from { opacity: 0; top: 0px; }
-    to   { opacity: 1; top: -70px; }
+  from { opacity: 0; transform: translate(-50%, -50%); }
+  to   { opacity: 1; transform: translate(-50%, calc(-50% - 70px)); } /* sube 70px */
 }
 @keyframes subire {
-    from { opacity: 0; top: 0px; }
-    to   { opacity: 1; top: -50px; }
+  from { opacity: 0; transform: translate(-50%, -50%); }
+  to   { opacity: 1; transform: translate(-50%, calc(-50% - 50px)); } /* sube 50px */
 }
 @keyframes bajar {
-    from { opacity: 0; top: 70%; }
-    to   { opacity: 1; top: 100%; }
+  from { opacity: 0; transform: translate(-50%, -50%); }
+  to   { opacity: 1; transform: translate(-50%, calc(-50% + 120px)); } /* baja ~120px */
 }
+
 /* Parpadeo rápido 3 veces */
 @keyframes parpadeo {
-    0%, 15% { opacity: 1; }
-    20%, 25% { opacity: 0; }
-    30%, 45% { opacity: 1; }
-    50%, 55% { opacity: 0; }
-    60%, 75% { opacity: 1; }
-    80%, 85% { opacity: 0; }
-    90%, 100% { opacity: 1; }
+  0%, 15% { opacity: 1; }
+  20%, 25% { opacity: 0; }
+  30%, 45% { opacity: 1; }
+  50%, 55% { opacity: 0; }
+  60%, 75% { opacity: 1; }
+  80%, 85% { opacity: 0; }
+  90%, 100% { opacity: 1; }
 }
 
-.siguenos2,.siguenos2bajar{
-    position: relative;
-    text-align: center;
+/* Contenedores auxiliares */
+.siguenos2, .siguenos2bajar {
+  position: relative;
+  text-align: center;
 }
-.siguenos2 p,.siguenos2bajar p{
-    width: 100%;
-    opacity: 0;
+.siguenos2 p, .siguenos2bajar p {
+  width: 100%;
+  opacity: 0;
 }
-/* Hover con dos animaciones: aparición + parpadeo */
+
+/* Hover en cada card (texto superior) */
 a.card:hover p {
-    animation: subir2 1s ease forwards, 
-               parpadeo2 1.2s step-start infinite;
-    animation-delay: 0s, 1s; /* Parpadeo empieza después de subir */
-}
-/* Aparición y subida */
-@keyframes subir2 {
-    from { opacity: 0; top: 0px; }
-    to   { opacity: 1; top: -50px; }
-}
-/* Parpadeo rápido 3 veces */
-@keyframes parpadeo2 {
-    0%, 15% { opacity: 1; }
-    20%, 25% { opacity: 0; }
-    30%, 45% { opacity: 1; }
-    50%, 55% { opacity: 0; }
-    60%, 75% { opacity: 1; }
-    80%, 85% { opacity: 0; }
-    90%, 100% { opacity: 1; }
+  animation: subir2 1s ease forwards, 
+             parpadeo2 1.2s step-start infinite;
+  animation-delay: 0s, 1s;
 }
 
+/* Aparición y subida para cards (desktop) */
+@keyframes subir2 {
+  from { opacity: 0; transform: translate(-50%, -50%); }
+  to   { opacity: 1; transform: translate(-50%, calc(-50% - 50px)); } /* sube 50px */
+}
+/* Parpadeo para cards */
+@keyframes parpadeo2 {
+  0%, 15% { opacity: 1; }
+  20%, 25% { opacity: 0; }
+  30%, 45% { opacity: 1; }
+  50%, 55% { opacity: 0; }
+  60%, 75% { opacity: 1; }
+  80%, 85% { opacity: 0; }
+  90%, 100% { opacity: 1; }
+}
+
+/* CARD visuals */
 .card i {
   font-size: 2rem;
   margin-bottom: 0.3rem;
   z-index: 2;
 }
-
 .card {
   width: 150px;
   height: 150px;
@@ -202,12 +215,10 @@ a.card:hover p {
   filter: grayscale(100%);
   flex-direction: column;
 }
-
 .card span {
   position: relative;
   z-index: 2;
 }
-
 .card::before {
   content: '';
   position: absolute;
@@ -218,31 +229,19 @@ a.card:hover p {
   z-index: 1;
   transition: transform 0.3s ease, filter 0.3s ease;
 }
-
-.card.instagram::before {
-  background-image: url('img/qks1.jpg');
-}
-
-.card.tiktok::before {
-  background-image: url('img/qks4.jpg');
-}
-
-.card.youtube::before {
-  background-image: url('img/qks6.jpg');
-}
+.card.instagram::before { background-image: url('img/qks1.jpg'); }
+.card.tiktok::before    { background-image: url('img/qks4.jpg'); }
+.card.youtube::before   { background-image: url('img/qks6.jpg'); }
 
 /* Hover con degradado rosa-celeste */
 .card:hover {
   transform: scale(1.05) skewX(2deg);
-      filter: grayscale(0%);
-
+  filter: grayscale(0%);
 }
-
 .card:hover::before {
   filter: brightness(1);
   transform: scale(1.1);
 }
-
 .card:hover::after {
   content: '';
   position: absolute;
@@ -251,32 +250,38 @@ a.card:hover p {
 }
 .card.instagram:hover::after {
   background: linear-gradient(
-  45deg,
-  rgba(254, 218, 117, 0.5),
-  rgba(250, 126, 30, 0.5),
-  rgba(214, 41, 118, 0.5),
-  rgba(150, 47, 191, 0.5),
-  rgba(79, 91, 213, 0.5)
-);
+    45deg,
+    rgba(254, 218, 117, 0.5),
+    rgba(250, 126, 30, 0.5),
+    rgba(214, 41, 118, 0.5),
+    rgba(150, 47, 191, 0.5),
+    rgba(79, 91, 213, 0.5)
+  );
 }
 .card.tiktok:hover::after {
-background: linear-gradient(
-  45deg,
-  rgba(0, 242, 234, 0.5),
-  rgba(255, 0, 80, 0.5),
-  rgba(0, 0, 0, 0.5)
-);}
+  background: linear-gradient(
+    45deg,
+    rgba(0, 242, 234, 0.5),
+    rgba(255, 0, 80, 0.5),
+    rgba(0, 0, 0, 0.5)
+  );
+}
 .card.youtube:hover::after {
-background: linear-gradient(
-  45deg,
-  rgba(255, 0, 0, 0.5),
-  rgba(200, 0, 0, 0.5),
-  rgba(50, 50, 50, 0.5)
-);
+  background: linear-gradient(
+    45deg,
+    rgba(255, 0, 0, 0.5),
+    rgba(200, 0, 0, 0.5),
+    rgba(50, 50, 50, 0.5)
+  );
 }
 
-/* Ajustes para móviles */
-@media (max-width: 768px) {
+/* ------------------
+   BREAKPOINTS / MOBILE
+   ------------------ */
+
+/* Portrait phones/tablets: animaciones horizontales */
+@media (max-width: 768px) and (orientation: portrait) {
+
   .glitch {
     font-size: 3rem; /* Reducir título */
   }
@@ -296,24 +301,6 @@ background: linear-gradient(
     font-size: 1.5rem;
   }
 
-  /* Ajustar animaciones de subida para distancias menores */
-  @keyframes subir {
-    from { opacity: 0; top: 0px; }
-    to   { opacity: 1; top: -50px; }
-  }
-  @keyframes subire {
-    from { opacity: 0; top: 0px; }
-    to   { opacity: 1; top: -40px; }
-  }
-  @keyframes bajar {
-    from { opacity: 0; top: 60%; }
-    to   { opacity: 1; top: 90%; }
-  }
-  @keyframes subir2 {
-    from { opacity: 0; top: 0px; }
-    to   { opacity: 1; top: -40px; }
-  }
-
   /* Reducir delay para que sea más ágil en móvil */
   a.card:hover p,
   #inicio:hover .cards p.siguenos1,
@@ -321,57 +308,40 @@ background: linear-gradient(
   .siguenos2bajar:hover p {
     animation-delay: 0s, 0.3s;
   }
-}
 
-/* Adaptación para móviles en vertical */
-@media (max-width: 768px) and (orientation: portrait) {
-  /* Cambiar animaciones a desplazamiento horizontal */
+  /* REDEFINICIÓN de las mismas keyframes pero moviendo en X (izquierda/derecha) */
   @keyframes subir {
-    from { opacity: 0; left: 0px; }
-    to   { opacity: 1; left: -50px; }
+    from { opacity: 0; transform: translate(-50%, -50%); }
+    to   { opacity: 1; transform: translate(calc(-50% - 70px), -50%); } /* va hacia la izquierda */
   }
   @keyframes subire {
-    from { opacity: 0; left: 0px; }
-    to   { opacity: 1; left: -40px; }
+    from { opacity: 0; transform: translate(-50%, -50%); }
+    to   { opacity: 1; transform: translate(calc(-50% - 50px), -50%); }
   }
   @keyframes bajar {
-    from { opacity: 0; left: 60%; }
-    to   { opacity: 1; left: 90%; }
+    from { opacity: 0; transform: translate(-50%, -50%); }
+    to   { opacity: 1; transform: translate(calc(-50% + 120px), -50%); } /* va hacia la derecha */
   }
   @keyframes subir2 {
-    from { opacity: 0; left: 0px; }
-    to   { opacity: 1; left: -40px; }
-  }
-
-  /* Ajuste de posición inicial de los textos animados */
-  #inicio .cards p {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    position: absolute;
+    from { opacity: 0; transform: translate(-50%, -50%); }
+    to   { opacity: 1; transform: translate(calc(-50% - 50px), -50%); }
   }
 }
 
-@media (max-width: 480px) {
-  .glitch {
-    font-size: 2rem;
-  }
-
-  .card {
-    width: 100px;
-    height: 100px;
-  }
-
-  .cards {
-    gap: 1rem;
-  }
-
-  .card i {
-    font-size: 1.2rem;
-  }
-
-  p, span {
-    font-size: 0.8rem;
-  }
+/* Otros ajustes móviles (pequeños) */
+@media (max-width: 480px) and (orientation: portrait) {
+  .glitch { font-size: 2rem; }
+  .card { width: 100px; height: 100px; }
+  .cards { gap: 1rem; }
+  .card i { font-size: 1.2rem; }
+  p, span { font-size: 0.8rem; }
 }
 
+/* Landscape small screens: mantener estructura desktop pero compacta */
+@media (max-height: 480px) and (orientation: landscape) {
+  .glitch { font-size: 2.5rem; }
+  .cards { flex-direction: row; justify-content: center; gap: 1.2rem; }
+  .card { width: 110px; height: 110px; }
+  .card i { font-size: 1.4rem; }
+  p, span { font-size: 0.85rem; }
+}
