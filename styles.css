@@ -276,7 +276,7 @@ background: linear-gradient(
 }
 
 /* Ajustes para móviles */
-@media (max-width: 768px) and (orientation: portrait) {
+@media (max-width: 768px) {
   .glitch {
     font-size: 3rem; /* Reducir título */
   }
@@ -323,7 +323,36 @@ background: linear-gradient(
   }
 }
 
-@media (max-width: 480px) and (orientation: portrait) {
+/* Adaptación para móviles en vertical */
+@media (max-width: 768px) and (orientation: portrait) {
+  /* Cambiar animaciones a desplazamiento horizontal */
+  @keyframes subir {
+    from { opacity: 0; left: 0px; }
+    to   { opacity: 1; left: -50px; }
+  }
+  @keyframes subire {
+    from { opacity: 0; left: 0px; }
+    to   { opacity: 1; left: -40px; }
+  }
+  @keyframes bajar {
+    from { opacity: 0; left: 60%; }
+    to   { opacity: 1; left: 90%; }
+  }
+  @keyframes subir2 {
+    from { opacity: 0; left: 0px; }
+    to   { opacity: 1; left: -40px; }
+  }
+
+  /* Ajuste de posición inicial de los textos animados */
+  #inicio .cards p {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+  }
+}
+
+@media (max-width: 480px) {
   .glitch {
     font-size: 2rem;
   }
@@ -346,28 +375,3 @@ background: linear-gradient(
   }
 }
 
-/* Ajustes para pantallas pequeñas en horizontal manteniendo estilo desktop */
-@media (max-height: 480px) and (orientation: landscape) {
-  .glitch {
-    font-size: 2.5rem;
-  }
-
-  .cards {
-    flex-direction: row;
-    justify-content: center;
-    gap: 1.2rem;
-  }
-
-  .card {
-    width: 110px;
-    height: 110px;
-  }
-
-  .card i {
-    font-size: 1.4rem;
-  }
-
-  p, span {
-    font-size: 0.85rem;
-  }
-}
