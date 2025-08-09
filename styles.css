@@ -276,7 +276,7 @@ background: linear-gradient(
 }
 
 /* Ajustes para móviles */
-@media (max-width: 768px) {
+@media (max-width: 768px) and (orientation: portrait) {
   .glitch {
     font-size: 3rem; /* Reducir título */
   }
@@ -323,7 +323,7 @@ background: linear-gradient(
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 480px) and (orientation: portrait) {
   .glitch {
     font-size: 2rem;
   }
@@ -343,5 +343,31 @@ background: linear-gradient(
 
   p, span {
     font-size: 0.8rem;
+  }
+}
+
+/* Ajustes para pantallas pequeñas en horizontal manteniendo estilo desktop */
+@media (max-height: 480px) and (orientation: landscape) {
+  .glitch {
+    font-size: 2.5rem;
+  }
+
+  .cards {
+    flex-direction: row;
+    justify-content: center;
+    gap: 1.2rem;
+  }
+
+  .card {
+    width: 110px;
+    height: 110px;
+  }
+
+  .card i {
+    font-size: 1.4rem;
+  }
+
+  p, span {
+    font-size: 0.85rem;
   }
 }
